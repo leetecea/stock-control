@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { PrimeNGConfig } from 'primeng/api'
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,10 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'stock-control';
+
+  constructor(private primeNgConfig : PrimeNGConfig) {}
+
+  ngOnit(): void{
+    this.primeNgConfig.ripple = true;
+  }
 }

@@ -1,0 +1,95 @@
+<div class="container">
+
+  <section class="flex justify-content-center align-content-center h-full">
+    <div class=" w-6 flex justify-content-center align-content-center text-align-center">
+
+    <!-- Login -->
+      <form
+        [formGroup]="loginForm"
+        (ngSubmit)="onSubmitLogin()"
+        class="flex flex-column justify-content-center align-content-center">
+
+        <p-card
+          header="Login"
+          subheader="Insira suas informações de login abaixo:"
+          *ngIf="loginCard"
+        >
+
+          <div class="field flex flex-column">
+            <label for="email">Email</label>
+            <input id="email" type="email" pInputText placeholder="fulanodetal@email.com"
+              formControlName="email"
+            />
+          </div>
+
+          <div class="field flex flex-column">
+            <label for="senha">Senha</label>
+            <input id="senha" type="password" pInputText placeholder="********"
+            formControlName="password"
+            />
+          </div>
+
+          <div class="flex flex-column justify-content-center w-6 m-auto">
+            <button type="submit"
+            pButton pRipple
+            [disabled]="!this.loginForm.valid"
+            label="Login"></button>
+            <p
+            (click)="loginCard = !loginCard"
+            class=" text-red-700 font-semibold m-auto mt-2 cursor-pointer hover:underline hover:text-indigo-700">Criar conta</p>
+          </div>
+
+        </p-card>
+      </form>
+
+    <!-- Cadastro -->
+    <form
+      [formGroup]="signupForm"
+      (ngSubmit)="onSubmitSignUp()"
+      class="flex flex-column justify-content-center align-content-center" >
+
+      <p-card
+        header="Criar conta"
+        subheader="Insira suas informações para criar uma conta:"
+        *ngIf="!loginCard"
+      >
+
+        <div class="field flex flex-column">
+          <label for="nome">Nome</label>
+          <input
+          formControlName="name"
+          id="nome" type="email" pInputText placeholder="Fulano de Tal" />
+        </div>
+
+        <div class="field flex flex-column">
+          <label for="email">Email</label>
+          <input
+          formControlName="email"
+           id="email" type="email" pInputText placeholder="fulanodetal@email.com" />
+        </div>
+
+        <div class="field flex flex-column">
+          <label for="senha">Senha</label>
+          <input
+            formControlName="password"
+            id="senha" type="password" pInputText placeholder="********" />
+        </div>
+
+        <div class="flex flex-column justify-content-center w-8 m-auto">
+          <button
+            [disabled]="!this.signupForm.valid"
+            type="submit" pButton pRipple label="Criar conta"></button>
+          <p
+          (click)="loginCard = !loginCard"
+          class=" text-red-700 font-semibold m-auto mt-2 cursor-pointer hover:underline hover:text-indigo-700"
+          >Fazer login
+          </p>
+        </div>
+
+      </p-card>
+    </form>
+
+    </div>
+  </section>
+
+</div>
