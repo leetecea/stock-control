@@ -14,4 +14,6 @@ export class AppComponent {
   ngOnit(): void{
     this.primeNgConfig.ripple = true;
   }
+
+
 }
