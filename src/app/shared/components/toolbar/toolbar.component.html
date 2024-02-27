@@ -10,6 +10,7 @@
 
   <!-- </div> -->
 
+  <div class="flex gap-3">
     <p-button
     icon="pi pi-cart-plus"
     label="Produtos"
@@ -24,4 +25,26 @@
     styleClass="bg-indigo-800 p-button-secondary"
     routerLinkActive="active-link"
     ></p-button>
+    <p-button
+    icon="pi pi-credit-card"
+    label="Efetuar venda"
+    routerLink="/products"
+    styleClass="bg-indigo-800 p-button-secondary"
+    routerLinkActive="active-link"
+    ></p-button>
+  </div>
+
+  <div class="p-toolbar-group-end">
+    <p-button
+      label="Sair"
+      icon="pi pi-sign-out"
+      styleClass="p-button-danger"
+      (onClick)="handleLogout()"
+
+      ></p-button>
+      <!--
+        esse (onClick) é um evento dentro de um componente externo (p-button é um comp do Prime
+        nome desse evento no button do Angular é (click)
+      -->
+  </div>
 </p-toolbar>
