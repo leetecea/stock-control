@@ -1,18 +1,21 @@
 import { Router } from '@angular/router';
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { CookieService } from 'ngx-cookie-service';
 import { MessageService } from 'primeng/api';
 import { SignUpUserRequest } from 'src/app/models/interfaces/user/SignUpUserRequest';
 import { AuthRequest } from 'src/app/models/interfaces/user/auth/AuthRequest';
 import { UserService } from 'src/app/services/user/user.service';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent {
+export class HomeComponent implements OnDestroy {
+
+  private destroy$ = new Subject<void>()
 
   loginCard = true;
 
@@ -37,7 +40,9 @@ export class HomeComponent {
 
   onSubmitLogin(): void {
     if (this.loginForm.value && this.loginForm.valid) {
-      this.userService.authUser(this.loginForm.value as AuthRequest).subscribe({
+      this.userService.authUser(this.loginForm.value as AuthRequest)
+      .pipe(takeUntil(this.destroy$)) //
+      .subscribe({
         next: (response) => {
           if(response){
             this.cookieService.set('USER_INFO', response?.token) // setando um cookie
@@ -67,7 +72,8 @@ export class HomeComponent {
   onSubmitSignUp(): void {
     if (this.signupForm.value && this.signupForm.valid){
       this.userService.signUpUser(this.signupForm.value as SignUpUserRequest)
-        .subscribe({
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
           next: (response) => {
             if(response){
               this.signupForm.reset()
@@ -90,4 +96,11 @@ export class HomeComponent {
         })
     }
   }
+
+  //é convenção implementar o OnDestroy no final da classe
+  ngOnDestroy(): void {
+      this.destroy$.next()
+      this.destroy$.complete()
+  }
+  // ngOnDestroy é chamado quando o componente é desmontado da tela
 }
