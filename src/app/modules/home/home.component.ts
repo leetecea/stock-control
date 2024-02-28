@@ -41,7 +41,11 @@ export class HomeComponent implements OnDestroy {
   onSubmitLogin(): void {
     if (this.loginForm.value && this.loginForm.valid) {
       this.userService.authUser(this.loginForm.value as AuthRequest)
-      .pipe(takeUntil(this.destroy$)) //
+      .pipe(takeUntil(this.destroy$))
+      // pipe - será utilizado para manipular o fluxo de dados e terá acesso aos dados antes da assinatura, o takeUntil espera receber um observable (destroy$)
+      // diz para o obsrvable continuar emitindo valores até que destroy$ emita um valor e assim que ele emitir um valor, o observable original sera encerrado
+      // colocado antes do .subscribe
+
       .subscribe({
         next: (response) => {
           if(response){
@@ -99,8 +103,8 @@ export class HomeComponent implements OnDestroy {
 
   //é convenção implementar o OnDestroy no final da classe
   ngOnDestroy(): void {
-      this.destroy$.next()
-      this.destroy$.complete()
+    this.destroy$.next() // emite um valor através do subject destroy$ - é o sinal de que o componente está sendo destruído
+    this.destroy$.complete() // completa o subject destroy$ -para que todos os observables sejam notificados que nao haverá mais valores a serem emitidos. Também libera qualquer memória associada ao Subject
   }
   // ngOnDestroy é chamado quando o componente é desmontado da tela
 }

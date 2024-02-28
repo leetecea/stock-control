@@ -1,7 +1,8 @@
 import { ProductsDataTransferService } from './../../../../shared/services/products/products-data-transfer.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MessageService } from 'primeng/api';
-import { GetAllProductsResponse } from 'src/app/models/interfaces/user/products/response/GetAllProductsResponse';
+import { Subject, takeUntil } from 'rxjs';
+import { GetAllProductsResponse } from 'src/app/models/interfaces/products/response/GetAllProductsResponse';
 import { ProductsService } from 'src/app/services/products/products.service';
 
 @Component({
@@ -9,7 +10,8 @@ import { ProductsService } from 'src/app/services/products/products.service';
   templateUrl: './dashboard-home.component.html',
   styleUrls: []
 })
-export class DashboardHomeComponent implements OnInit {
+export class DashboardHomeComponent implements OnInit, OnDestroy {
+  private destroy$ = new Subject<void>()
 
   public productsList: Array<GetAllProductsResponse> = [];
 
@@ -27,6 +29,7 @@ export class DashboardHomeComponent implements OnInit {
   getProductsData(): void {
     this.productsService
       .getAllProducts()
+      .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: response =>{
           if(response.length > 0){
@@ -45,5 +48,10 @@ export class DashboardHomeComponent implements OnInit {
         }
       })
   }
+
+  ngOnDestroy(): void {
+    this.destroy$.next() // emite um valor através do subject destroy$ - é o sinal de que o componente está sendo destruído
+    this.destroy$.complete() // completa o subject destroy$ -para que todos os observables sejam notificados que nao haverá mais valores a serem emitidos. Também libera qualquer memória associada ao Subject
+}
 
 }
