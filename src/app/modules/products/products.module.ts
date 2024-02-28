@@ -1,8 +1,8 @@
-import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { RouterModule } from '@angular/router';
 
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
@@ -13,8 +13,8 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { DialogService, DynamicDialogModule } from 'primeng/dynamicdialog';
-import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DropdownModule } from 'primeng/dropdown';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { TooltipModule } from 'primeng/tooltip';
 import { ConfirmationService } from 'primeng/api';
 
@@ -28,11 +28,11 @@ import { PRODUCTS_ROUTES } from './products.routing';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    RouterModule.forChild(PRODUCTS_ROUTES),
     SharedModule,
     HttpClientModule,
-    RouterModule.forChild(PRODUCTS_ROUTES),
 
-    //PrimeNg
+    // PrimeNg
     CardModule,
     ButtonModule,
     TableModule,
@@ -44,8 +44,8 @@ import { PRODUCTS_ROUTES } from './products.routing';
     DynamicDialogModule,
     DropdownModule,
     ConfirmDialogModule,
-    TooltipModule
+    TooltipModule,
   ],
-  providers: [DialogService, ConfirmationService]
+  providers: [DialogService, ConfirmationService],
 })
-export class ProductsModule { }
+export class ProductsModule {}

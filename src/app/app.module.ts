@@ -14,11 +14,15 @@ import { ButtonModule } from 'primeng/button'
 import { ToastModule } from 'primeng/toast'
 import {CookieService} from 'ngx-cookie-service';
 import { MessageService } from 'primeng/api';
+import { ProductsComponent } from './services/products/page/products/products.component';
+import { ProductsHomeComponent } from './services/products/page/products-home/products-home.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent
+    HomeComponent,
+    ProductsComponent,
+    ProductsHomeComponent
   ],
   imports: [
     BrowserModule,
