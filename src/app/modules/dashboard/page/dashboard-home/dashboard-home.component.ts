@@ -4,7 +4,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { Subject, takeUntil } from 'rxjs';
 import { GetAllProductsResponse } from 'src/app/models/interfaces/products/response/GetAllProductsResponse';
-import { ProductsService } from 'src/app/services/products/products.service';
+import { ProductsService } from './../../../../services/products/products.service';
 
 @Component({
   selector: 'app-dashboard-home',
