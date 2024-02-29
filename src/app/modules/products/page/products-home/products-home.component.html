@@ -1,3 +1,8 @@
 <app-toolbar></app-toolbar>
 
-<app-products-table [products]="productsData"></app-products-table>
+<app-products-table [products]="productsData" (productEvent)="handleProductAction($event)" (deleteProductEvent)="handleDeleteProductAction($event)">
+  // @Output:
+  // passar o nome do Output e o valor que será emitido que estão presentes no componente pai
+</app-products-table>
+
+<p-confirmDialog [style]="{ width: '50%'}"></p-confirmDialog>
