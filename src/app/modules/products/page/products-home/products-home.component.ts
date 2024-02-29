@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
-import { Subject } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { GetAllProductsResponse } from 'src/app/models/interfaces/products/response/GetAllProductsResponse';
 import { ProductsService } from 'src/app/services/products/products.service';
 import { ProductsDataTransferService } from 'src/app/shared/services/products/products-data-transfer.service';
@@ -31,21 +31,20 @@ export class ProductsHomeComponent implements OnInit, OnDestroy {
 
     if (productsLoaded.length > 0) {
       this.productsData = productsLoaded;
-    } else this.getAPIProductsDatas();
-
+    } else this.getAPIProductsData()
   }
 
-  getAPIProductsDatas() {
+  getAPIProductsData() {
     this.productsService
       .getAllProducts()
       .pipe(takeUntil(this.destroy$))
-      .subscribe({
+      .subscribe({ // callback de sucesso
         next: (response) => {
           if (response.length > 0) {
-            this.productsDatas = response;
+            this.productsData = response;
           }
         },
-        error: (err) => {
+        error: (err) => { // callback de erro
           console.log(err);
           this.messageService.add({
             severity: 'error',
@@ -58,10 +57,8 @@ export class ProductsHomeComponent implements OnInit, OnDestroy {
       });
   }
 
-
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
   }
-
 }

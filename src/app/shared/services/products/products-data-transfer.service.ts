@@ -16,6 +16,14 @@ export class ProductsDataTransferService {
 
   public productsData: Array<GetAllProductsResponse> = []
 
+
+  setProductsData(products: Array<GetAllProductsResponse>): void {
+    if (products) {
+      this.productsDataEmitter$.next(products)
+      this.getProductsData()
+    }
+  }
+
   getProductsData() {
     this.productsDataEmitter$
     .pipe(
@@ -30,14 +38,6 @@ export class ProductsDataTransferService {
           this.productsData = response
         }}
     })
-    return this.getProductsData
+    return this.productsData
   }
-
-  setProductsData(products: Array<GetAllProductsResponse>): void {
-    if (products) {
-      this.productsDataEmitter$.next(products)
-      this.getProductsData()
-    }
-  }
-
 }
