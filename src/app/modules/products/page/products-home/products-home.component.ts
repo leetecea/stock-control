@@ -81,7 +81,29 @@ export class ProductsHomeComponent implements OnInit, OnDestroy {
 
   deleteProduct(product_ID: string) {
     if(product_ID){
-      alert(product_ID)
+      this.productsService.deleteProduct(product_ID)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: response => {
+          this.messageService.add({
+            severity: 'success',
+            summary:'Sucesso',
+            detail: 'Produto removido com sucesso',
+            life: 2500
+          }),
+          this.getAPIProductsData() // Para atualizar tela após remover o produto, chama novamente o metodo para fazer uma nova requisição
+        },
+        error: err => {
+          console.log(err)
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Erro',
+            detail: 'Erro ao remover produto',
+            life: 2500
+          })
+        }
+
+      })
     }
   }
 
