@@ -1,4 +1,7 @@
-<div>
+
+<!-- FORMS NOVO PRODUTO -->
+
+<div *ngIf="productAction?.event?.action === addProductAction">
   <form [formGroup]="addProductForm" (ngSubmit)="handleSubmitAddProduct()">
     <div class="card flex flex-column md:flex-column gap-3">
 
@@ -29,6 +32,25 @@
             label="Enviar"
           ></p-button>
         </div>
+    </div>
+  </form>
+</div>
+
+<!-- FORMS EDITAR PRODUTO -->
+
+<div *ngIf="productAction?.event?.action === editProductAction">
+  <form [formGroup]="editProductForm" (ngSubmit)="handleSubmitEditProduct()" class="card flex flex-column gap-3">
+    <input pInputText placeholder="Nome" formControlName="name">
+    <input pInputText placeholder="Preço" formControlName="price">
+    <input pInputText placeholder="Descrição" formControlName="description">
+    <input pInputText type="number" placeholder="Quantidade" formControlName="amount">
+
+    <div class="flex flex-row justify-content-center align-content-center align-items-center">
+      <p-button
+        [disabled]="!editProductForm.valid"
+        type="submit"
+        label="Enviar"
+      ></p-button>
     </div>
   </form>
 </div>
