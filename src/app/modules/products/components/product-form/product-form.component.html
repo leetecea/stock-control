@@ -40,7 +40,22 @@
 
 <div *ngIf="productAction?.event?.action === editProductAction">
   <form [formGroup]="editProductForm" (ngSubmit)="handleSubmitEditProduct()" class="card flex flex-column gap-3">
+    <!-- formGroup -> classe que agrega valores de cada filho FormControl em um objeto, com cada nome de controle como a chave, assim é possivel gerenciar o valor e o status de validação de um grupo de instancias -->
+
+    <!-- formBuilder -> é um serviço injetavel fornecido junto com o modulo de formularios reativos, possui 3 metodos (control(), group(), array()), o grpoup é utilizado para criar instancias de controle -->
+
+    <!-- ngSumit -> metodo que será executado quando o formulario for submetido (enviado) -->
     <input pInputText placeholder="Nome" formControlName="name">
+    <div *ngIf="renderDropdown">
+      <p-dropdown
+          styleClass="w-full"
+          [options]="categories"
+          [(ngModel)]="selectedCategory"
+          optionLabel="name"
+          optionValue="id"
+          formControlName="category_id"
+        ></p-dropdown>
+    </div>
     <input pInputText placeholder="Preço" formControlName="price">
     <input pInputText placeholder="Descrição" formControlName="description">
     <input pInputText type="number" placeholder="Quantidade" formControlName="amount">
